@@ -1,0 +1,29 @@
+{
+  "name": "otta-engineering-interview-task",
+  "version": "1.0.0",
+  "description": "This is the take-home interview task for engineering job applications at Otta.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "build": "rm -rf build/ && prettier --write src/ && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OttaTech/otta-engineering-interview-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OttaTech/otta-engineering-interview-task/issues"
+  },
+  "homepage": "https://github.com/OttaTech/otta-engineering-interview-task#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}
