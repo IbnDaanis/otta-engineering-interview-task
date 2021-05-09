@@ -1,9 +1,10 @@
 import { ReactionInterface } from './interfaces/ReactionInterface'
 import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
-import Reactions from './data/reactions'
+// import Reactions from './data/reactions'
+import { reactionsSample1 } from './data/reactionsSamples'
 
 export const taskOne = async () => {
-  const reactions: ReactionInterface[] = await Reactions()
+  const reactions: ReactionInterface[] = reactionsSample1
 
   const users: UsersArray = Object.entries(
     reactions.reduce((accumulator: UsersInterface, current: ReactionInterface): UsersInterface => {
