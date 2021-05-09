@@ -4,9 +4,8 @@ import { ReactionInterface } from '../interfaces/ReactionInterface'
 const reactions = async () => {
   const csvFilePath = 'src/data/reactions.csv'
   const data: ReactionInterface[] = await csv().fromFile(csvFilePath)
-  const filteredData: ReactionInterface[] = data
+  const filteredData: ReactionInterface[] = data // Filtering out jobs that are not liked
     .filter(reaction => reaction.direction === 'true')
-    .sort((a, b) => +b.job_id - +a.job_id)
   return filteredData
 }
 
