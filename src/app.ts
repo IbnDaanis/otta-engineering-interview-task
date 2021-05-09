@@ -50,7 +50,7 @@ const main = async () => {
 
   const likes: [string, Set<string>][] = Object.entries(users).sort((a, b) => b[1].size - a[1].size)
 
-  for (let i = 1; i < likes.length - 1; i++) {
+  for (let i = 1; i < likes.length; i++) {
     const curr = likes[i]
     const prev = likes[i - 1]
     if (curr[1].size === prev[1].size) {
