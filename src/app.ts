@@ -1,20 +1,11 @@
 import csv from 'csvtojson/v2'
-
-interface ReactionInterface {
-  user_id: string
-  job_id: string
-  direction: string
-  time: string
-}
-
-interface UsersInterface {
-  [key: string]: Set<string>
-}
+import { ReactionInterface } from './interfaces/ReactionInterface'
+import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
 
 const main = async () => {
   const csvFilePath = 'src/data/reactions.csv'
   const reactionsData: ReactionInterface[] = await csv().fromFile(csvFilePath)
-  const reactions = reactionsData
+  const reactions: ReactionInterface[] = reactionsData
     .filter(reaction => reaction.direction === 'true')
     .sort((a, b) => +b.job_id - +a.job_id)
 
@@ -35,7 +26,7 @@ const main = async () => {
   //   { job_id: 'apple', user_id: 'jack', direction: 'true', time: '' }
   // ]
 
-  const users = Object.entries(
+  const users: UsersArray = Object.entries(
     reactions.reduce((accumulator: UsersInterface, current: ReactionInterface): UsersInterface => {
       if (!accumulator[current.user_id]) {
         accumulator[current.user_id] = new Set()
@@ -55,7 +46,7 @@ const main = async () => {
     return common
   }
 
-  const answers: any = []
+  const answers: UsersArray = []
   let score: number = 0
 
   for (let i = 0; i < users.length; i++) {
@@ -84,18 +75,9 @@ const main = async () => {
     }
   }
 
-  console.log(answers, score)
+  console.log(users)
 
   return answers
 }
 
 main()
-
-// const jobs = async () => {
-//   const csvFilePath = 'src/data/jobs.csv'
-//   const jobsData = await csv().fromFile(csvFilePath)
-
-//   console.log(jobsData.sort((a, b) => +b.company_id - +a.company_id))
-// }
-
-// jobs()
