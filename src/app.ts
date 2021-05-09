@@ -1,13 +1,9 @@
-import csv from 'csvtojson/v2'
 import { ReactionInterface } from './interfaces/ReactionInterface'
 import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
+import Reactions from './data/reactions'
 
 const main = async () => {
-  const csvFilePath = 'src/data/reactions.csv'
-  const reactionsData: ReactionInterface[] = await csv().fromFile(csvFilePath)
-  const reactions: ReactionInterface[] = reactionsData
-    .filter(reaction => reaction.direction === 'true')
-    .sort((a, b) => +b.job_id - +a.job_id)
+  const reactions: ReactionInterface[] = await Reactions()
 
   // const reactions: ReactionInterface[] = [
   //   { job_id: 'facebook', user_id: 'john', direction: 'true', time: '' },
@@ -75,7 +71,7 @@ const main = async () => {
     }
   }
 
-  console.log(users)
+  console.log(answers, score)
 
   return answers
 }
