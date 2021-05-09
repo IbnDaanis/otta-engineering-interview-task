@@ -2,25 +2,8 @@ import { ReactionInterface } from './interfaces/ReactionInterface'
 import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
 import Reactions from './data/reactions'
 
-const main = async () => {
+const taskOne = async () => {
   const reactions: ReactionInterface[] = await Reactions()
-
-  // const reactions: ReactionInterface[] = [
-  //   { job_id: 'facebook', user_id: 'john', direction: 'true', time: '' },
-  //   { job_id: 'apple', user_id: 'john', direction: 'true', time: '' },
-  //   { job_id: 'amazon', user_id: 'john', direction: 'true', time: '' },
-  //   { job_id: 'netflix', user_id: 'john', direction: 'true', time: '' },
-  //   { job_id: 'google', user_id: 'john', direction: 'true', time: '' },
-  //   { job_id: 'facebook', user_id: 'jane', direction: 'true', time: '' },
-  //   { job_id: 'apple', user_id: 'jane', direction: 'true', time: '' },
-  //   { job_id: 'amazon', user_id: 'jane', direction: 'true', time: '' },
-  //   { job_id: 'netflix', user_id: 'jane', direction: 'true', time: '' },
-  //   { job_id: 'facebook', user_id: 'james', direction: 'true', time: '' },
-  //   { job_id: 'apple', user_id: 'james', direction: 'true', time: '' },
-  //   { job_id: 'amazon', user_id: 'james', direction: 'true', time: '' },
-  //   { job_id: 'facebook', user_id: 'jack', direction: 'true', time: '' },
-  //   { job_id: 'apple', user_id: 'jack', direction: 'true', time: '' }
-  // ]
 
   const users: UsersArray = Object.entries(
     reactions.reduce((accumulator: UsersInterface, current: ReactionInterface): UsersInterface => {
@@ -71,9 +54,7 @@ const main = async () => {
     }
   }
 
-  console.log(answers, score)
-
-  return answers
+  return { user1: answers[0][0], user2: answers[1][0], similarity: score }
 }
 
-main()
+taskOne().then(data => console.log(data))
