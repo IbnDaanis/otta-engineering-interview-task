@@ -1,5 +1,3 @@
-import Jobs from './data/jobs'
-import Reactions from './data/reactions'
 import {
   JobInterface,
   ReactionInterface,
@@ -9,11 +7,9 @@ import {
 } from './interfaces'
 import { findHighestSimilarity } from './utils'
 
-export const taskTwo = async () => {
-  const jobs: JobInterface[] = await Jobs()
-  const reactions: ReactionInterface[] = await Reactions()
-  // const jobs: JobInterface[] = jobsSample1
-  // const reactions: ReactionInterface[] = reactionsSample1
+export const taskTwo = async (jobsData: JobInterface[], reactionsData: ReactionInterface[]) => {
+  const jobs: JobInterface[] = await jobsData
+  const reactions: ReactionInterface[] = await reactionsData
   const combined: CombinedDataInterface[] = reactions.map(reaction => {
     const current: CombinedDataInterface = { ...reaction, company_id: '' }
     jobs.forEach(job => {
