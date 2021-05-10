@@ -19,9 +19,9 @@ export const reactionsSample1: ReactionInterface[] = [
   { job_id: 'senior netflix', user_id: 'jack', direction: 'true', time: '' },
   { job_id: 'junior google', user_id: 'john', direction: 'true', time: '' },
   { job_id: 'junior google', user_id: 'jane', direction: 'true', time: '' },
-  { job_id: 'junior google', user_id: 'jim', direction: 'true', time: '' },
-  { job_id: 'junior google', user_id: 'james', direction: 'true', time: '' },
-  { job_id: 'junior google', user_id: 'jack', direction: 'true', time: '' }
+  { job_id: 'junior google', user_id: 'jim', direction: 'true', time: '' }
+  // { job_id: 'junior google', user_id: 'james', direction: 'true', time: '' }
+  // { job_id: 'junior google', user_id: 'jack', direction: 'true', time: '' }
 ]
 
 export const reactionsSample2: ReactionInterface[] = [
