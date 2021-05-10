@@ -5,7 +5,7 @@ import { reactionsSample1 } from './data/reactionsSamples'
 import { CombinedDataInterface } from './interfaces/CombinedDataInterface'
 import { JobInterface } from './interfaces/JobInterface'
 import { ReactionInterface } from './interfaces/ReactionInterface'
-// import { UsersInterface } from './interfaces/UsersInterface'
+import { SetInterface } from './interfaces/SetInterface'
 
 export const taskTwo = async () => {
   // const jobs: JobInterface[] = await Jobs()
@@ -36,18 +36,18 @@ export const taskTwo = async () => {
     {}
   )
 
-  // const users = reactions.reduce(
-  //   (accumulator: UsersInterface, current: ReactionInterface): UsersInterface => {
-  //     if (!accumulator[current.user_id]) {
-  //       accumulator[current.user_id] = new Set()
-  //       if (current.direction) accumulator[current.user_id].add(current.job_id)
-  //     } else if (current.direction) {
-  //       accumulator[current.user_id].add(current.job_id)
-  //     }
-  //     return accumulator
-  //   },
-  //   {}
-  // )
+  const users = combined.reduce(
+    (accumulator: SetInterface, current: CombinedDataInterface): SetInterface => {
+      if (!accumulator[current.user_id]) {
+        accumulator[current.user_id] = new Set()
+        accumulator[current.user_id].add(current.company_id)
+      } else if (current.direction) {
+        accumulator[current.user_id].add(current.company_id)
+      }
+      return accumulator
+    },
+    {}
+  )
 
   // const compareLikes = (first: Set<string>, second: Set<string>): number => {
   //   let common = 0
@@ -65,6 +65,6 @@ export const taskTwo = async () => {
 
   //  }
 
-  console.log(combined)
+  console.log(users)
   return companies
 }
