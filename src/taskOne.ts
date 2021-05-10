@@ -1,16 +1,18 @@
-import { ReactionInterface } from './interfaces/ReactionInterface'
-import { UsersInterface } from './interfaces/UsersInterface'
 // import Reactions from './data/reactions'
 import { reactionsSample1 } from './data/reactionsSamples'
-import { compareSetSimilarity } from './utils/compareSetSimilarity'
+import { ReactionInterface } from './interfaces/ReactionInterface'
+import { UsersInterface } from './interfaces/UsersInterface'
 import { StringSetArrayType } from './interfaces/StringSetArrayType'
+import { findHighestSimilarity } from './utils/findHighestSimilarity'
 
 export const taskOne = async () => {
+  // const reactions: ReactionInterface[] = await Reactions()
   const reactions: ReactionInterface[] = reactionsSample1
 
   const users: StringSetArrayType[] = Object.entries(
     reactions.reduce((accumulator: UsersInterface, current: ReactionInterface): UsersInterface => {
       if (!accumulator[current.user_id]) {
+        // Set because we don't want to count duplicates of job likes
         accumulator[current.user_id] = new Set()
         if (current.direction) accumulator[current.user_id].add(current.job_id)
       } else if (current.direction) {
@@ -18,36 +20,9 @@ export const taskOne = async () => {
       }
       return accumulator
     }, {})
-  )
+  ) // [user, Set(){...jobs}]
 
-  const answers: StringSetArrayType[] = []
-  let score: number = 0
-
-  for (let i = 0; i < users.length; i++) {
-    const currentUser = users[i]
-
-    if (!answers.length && !score) {
-      answers[0] = currentUser
-      answers[1] = users[i + 1]
-      score = compareSetSimilarity(currentUser[1], users[i + 1][1])
-      i++
-      continue
-    }
-
-    const comparisonToFirst: number = compareSetSimilarity(currentUser[1], answers[0][1])
-    const comparisonToSecond: number = compareSetSimilarity(currentUser[1], answers[1][1])
-
-    if (comparisonToFirst > score) {
-      answers[1] = currentUser
-      score = comparisonToFirst
-      continue
-    }
-
-    if (comparisonToSecond > score) {
-      answers[0] = currentUser
-      score = comparisonToSecond
-    }
-  }
+  const { answers, score } = findHighestSimilarity(users)
 
   return { user1: answers[0][0], user2: answers[1][0], similarity: score }
 }
