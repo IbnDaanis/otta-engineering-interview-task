@@ -8,7 +8,7 @@ import {
 import { findHighestSimilarity } from './utils'
 
 export const taskTwo = async (
-  jobsData: JobInterface[],
+  jobsData: JobInterface[] | Promise<JobInterface[]>,
   reactionsData: ReactionInterface[] | Promise<ReactionInterface[]>
 ) => {
   const jobs: JobInterface[] = await jobsData
