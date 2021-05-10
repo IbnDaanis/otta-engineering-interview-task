@@ -4,7 +4,7 @@
   "description": "This is the take-home interview task for engineering job applications at Otta.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/app.ts",
+    "dev": "nodemon src/answers.ts",
     "test": "jest",
     "build": "rm -rf build/ && prettier --write src/ && tsc"
   },
