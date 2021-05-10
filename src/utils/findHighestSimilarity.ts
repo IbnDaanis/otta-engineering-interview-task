@@ -1,5 +1,5 @@
-import { StringSetArrayType } from '../interfaces/StringSetArrayType'
-import { compareSetSimilarity } from './compareSetSimilarity'
+import { StringSetArrayType } from '../interfaces'
+import { compareSetSimilarity } from './'
 
 export const findHighestSimilarity = (
   data: StringSetArrayType[]

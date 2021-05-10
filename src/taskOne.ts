@@ -1,9 +1,7 @@
 // import Reactions from './data/reactions'
 import { reactionsSample1 } from './data/reactionsSamples'
-import { ReactionInterface } from './interfaces/ReactionInterface'
-import { StringSetInterface } from './interfaces/StringSetInterface'
-import { StringSetArrayType } from './interfaces/StringSetArrayType'
-import { findHighestSimilarity } from './utils/findHighestSimilarity'
+import { ReactionInterface, StringSetArrayType, StringSetInterface } from './interfaces'
+import { findHighestSimilarity } from './utils'
 
 export const taskOne = async () => {
   // const reactions: ReactionInterface[] = await Reactions()

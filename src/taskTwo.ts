@@ -1,13 +1,13 @@
 import Jobs from './data/jobs'
 import Reactions from './data/reactions'
-// import { jobsSample1 } from './data/jobsSamples'
-// import { reactionsSample1 } from './data/reactionsSamples'
-import { CombinedDataInterface } from './interfaces/CombinedDataInterface'
-import { StringSetInterface } from './interfaces/StringSetInterface'
-import { JobInterface } from './interfaces/JobInterface'
-import { ReactionInterface } from './interfaces/ReactionInterface'
-import { StringSetArrayType } from './interfaces/StringSetArrayType'
-import { findHighestSimilarity } from './utils/findHighestSimilarity'
+import {
+  JobInterface,
+  ReactionInterface,
+  CombinedDataInterface,
+  StringSetArrayType,
+  StringSetInterface
+} from './interfaces'
+import { findHighestSimilarity } from './utils'
 
 export const taskTwo = async () => {
   const jobs: JobInterface[] = await Jobs()
