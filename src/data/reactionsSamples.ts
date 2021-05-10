@@ -14,5 +14,7 @@ export const reactionsSample1: ReactionInterface[] = [
   { job_id: 'mid apple', user_id: 'james', direction: 'true', time: '' },
   { job_id: 'senior amazon', user_id: 'james', direction: 'true', time: '' },
   { job_id: 'senior facebook', user_id: 'jack', direction: 'true', time: '' },
-  { job_id: 'mid apple', user_id: 'jack', direction: 'true', time: '' }
+  { job_id: 'mid apple', user_id: 'jack', direction: 'true', time: '' },
+  { job_id: 'senior facebook', user_id: 'jim', direction: 'true', time: '' },
+  { job_id: 'mid apple', user_id: 'jim', direction: 'true', time: '' }
 ]

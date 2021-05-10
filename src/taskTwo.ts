@@ -6,6 +6,7 @@ import { CombinedDataInterface } from './interfaces/CombinedDataInterface'
 import { JobInterface } from './interfaces/JobInterface'
 import { ReactionInterface } from './interfaces/ReactionInterface'
 import { SetInterface } from './interfaces/SetInterface'
+import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
 
 export const taskTwo = async () => {
   // const jobs: JobInterface[] = await Jobs()
@@ -22,22 +23,22 @@ export const taskTwo = async () => {
     return curr
   })
 
-  const companies: any = combined.reduce(
-    (accumulator: any, current: CombinedDataInterface): any => {
-      if (!accumulator[current.company_id]) {
-        accumulator[current.company_id] = new Set()
-        accumulator[current.company_id].add(current.job_id)
-      }
-      // else if (current.direction) {
-      //   accumulator[current.user_id].add(current.job_id)
-      // }
-      return accumulator
-    },
-    {}
+  const companies: [string, Set<string>][] = Object.entries(
+    combined.reduce(
+      (accumulator: UsersInterface, current: CombinedDataInterface): UsersInterface => {
+        if (!accumulator[current.company_id]) {
+          accumulator[current.company_id] = new Set() // Set because we are counting only one job like from each company
+          accumulator[current.company_id].add(current.job_id)
+        }
+
+        return accumulator
+      },
+      {}
+    )
   )
 
-  const users = combined.reduce(
-    (accumulator: SetInterface, current: CombinedDataInterface): SetInterface => {
+  const userCompanies: UsersArray = Object.entries(
+    combined.reduce((accumulator: SetInterface, current: CombinedDataInterface): SetInterface => {
       if (!accumulator[current.user_id]) {
         accumulator[current.user_id] = new Set()
         accumulator[current.user_id].add(current.company_id)
@@ -45,26 +46,48 @@ export const taskTwo = async () => {
         accumulator[current.user_id].add(current.company_id)
       }
       return accumulator
-    },
-    {}
+    }, {})
   )
 
-  // const compareLikes = (first: Set<string>, second: Set<string>): number => {
-  //   let common = 0
-  //   for (const a of first) {
-  //     if (second.has(a)) common++
-  //   }
-  //   return common
-  // }
+  const compareLikes = (first: string, second: string, array: UsersArray): number => {
+    let common = 0
+    array.forEach(user => {
+      if (user[1].has(first) && user[1].has(second)) common++
+    })
+    return common
+  }
 
-  //  const answers: UsersArray = []
-  //  let score: number = 0
+  const answers: any = []
+  let score: number = 0
 
-  //  for (let i = 0; i < companies.length; i++) {
-  //    const currentUser = users[i]
+  for (let i = 0; i < companies.length; i++) {
+    const currentCompany = companies[i]
+    const nextCompany = companies[i + 1]
 
-  //  }
+    if (!answers.length && !score) {
+      answers[0] = currentCompany
+      answers[1] = nextCompany
+      let scores = compareLikes(currentCompany[0], nextCompany[0], userCompanies)
 
-  console.log(users)
-  return companies
+      score = scores
+      i++
+      continue
+    }
+
+    const comparisonToFirst: number = compareLikes(currentCompany[0], answers[0][1], userCompanies)
+    const comparisonToSecond: number = compareLikes(currentCompany[0], answers[1][1], userCompanies)
+
+    if (comparisonToFirst > score) {
+      answers[1] = currentCompany
+      score = comparisonToFirst
+      continue
+    }
+
+    if (comparisonToSecond > score) {
+      answers[0] = currentCompany
+      score = comparisonToSecond
+    }
+  }
+
+  return { company1: answers[0][0], company2: answers[1][0], similarity: score }
 }
