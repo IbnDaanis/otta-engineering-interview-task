@@ -52,12 +52,15 @@ export const taskTwo = async () => {
   const compareLikes = (first: string, second: string, array: UsersArray): number => {
     let common = 0
     array.forEach(user => {
-      if (user[1].has(first) && user[1].has(second)) common++
+      // console.log(user[1].has(first) && user[1].has(second))
+      if (user[1].has(first) && user[1].has(second)) {
+        common++
+      }
     })
     return common
   }
 
-  const answers: any = []
+  const answers: [string, Set<string>][] = []
   let score: number = 0
 
   for (let i = 0; i < companies.length; i++) {
@@ -67,15 +70,14 @@ export const taskTwo = async () => {
     if (!answers.length && !score) {
       answers[0] = currentCompany
       answers[1] = nextCompany
-      let scores = compareLikes(currentCompany[0], nextCompany[0], userCompanies)
-
-      score = scores
+      score = compareLikes(currentCompany[0], nextCompany[0], userCompanies)
       i++
       continue
     }
 
-    const comparisonToFirst: number = compareLikes(currentCompany[0], answers[0][1], userCompanies)
-    const comparisonToSecond: number = compareLikes(currentCompany[0], answers[1][1], userCompanies)
+    const comparisonToFirst: number = compareLikes(currentCompany[0], answers[0][0], userCompanies)
+    const comparisonToSecond: number = compareLikes(currentCompany[0], answers[1][0], userCompanies)
+    console.log(answers[0][0], answers[1][0])
 
     if (comparisonToFirst > score) {
       answers[1] = currentCompany
