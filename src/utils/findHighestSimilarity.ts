@@ -4,11 +4,11 @@ import { compareSetSimilarity } from './'
 export const findHighestSimilarity = (
   data: StringSetArrayType[]
 ): { answers: StringSetArrayType[]; score: number } => {
-  const answers = []
+  const answers: StringSetArrayType[] = []
   let score: number = 0
 
   for (let i = 0; i < data.length; i++) {
-    const currentUser = data[i]
+    const currentUser: StringSetArrayType = data[i]
 
     if (!answers.length && !score) {
       answers[0] = currentUser
