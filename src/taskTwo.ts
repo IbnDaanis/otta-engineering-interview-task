@@ -3,7 +3,7 @@ import Reactions from './data/reactions'
 // import { jobsSample1 } from './data/jobsSamples'
 // import { reactionsSample1 } from './data/reactionsSamples'
 import { CombinedDataInterface } from './interfaces/CombinedDataInterface'
-import { CompaniesInterface } from './interfaces/CompaniesInterface'
+import { StringSetInterface } from './interfaces/StringSetInterface'
 import { JobInterface } from './interfaces/JobInterface'
 import { ReactionInterface } from './interfaces/ReactionInterface'
 import { StringSetArrayType } from './interfaces/StringSetArrayType'
@@ -25,7 +25,7 @@ export const taskTwo = async () => {
   })
 
   const companies: StringSetArrayType[] = Object.entries(
-    combined.reduce((accumulator: CompaniesInterface, current: CombinedDataInterface) => {
+    combined.reduce((accumulator: StringSetInterface, current: CombinedDataInterface) => {
       if (!accumulator[current.company_id]) accumulator[current.company_id] = new Set()
       // Set because we are counting only one job like from each company
       accumulator[current.company_id].add(current.user_id)
