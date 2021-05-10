@@ -3,10 +3,11 @@
 import { jobsSample1 } from './data/jobsSamples'
 import { reactionsSample1 } from './data/reactionsSamples'
 import { CombinedDataInterface } from './interfaces/CombinedDataInterface'
+import { CompaniesInterface } from './interfaces/CompaniesInterface'
 import { JobInterface } from './interfaces/JobInterface'
 import { ReactionInterface } from './interfaces/ReactionInterface'
-import { SetInterface } from './interfaces/SetInterface'
-import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
+// import { SetInterface } from './interfaces/SetInterface'
+// import { UsersInterface } from './interfaces/UsersInterface'
 
 export const taskTwo = async () => {
   // const jobs: JobInterface[] = await Jobs()
@@ -23,73 +24,76 @@ export const taskTwo = async () => {
     return curr
   })
 
-  const companies: [string, Set<string>][] = Object.entries(
-    combined.reduce(
-      (accumulator: UsersInterface, current: CombinedDataInterface): UsersInterface => {
-        if (!accumulator[current.company_id]) {
-          accumulator[current.company_id] = new Set() // Set because we are counting only one job like from each company
-          accumulator[current.company_id].add(current.job_id)
-        }
-
-        return accumulator
-      },
-      {}
-    )
-  )
-
-  const userCompanies: UsersArray = Object.entries(
-    combined.reduce((accumulator: SetInterface, current: CombinedDataInterface): SetInterface => {
-      if (!accumulator[current.user_id]) {
-        accumulator[current.user_id] = new Set()
-        accumulator[current.user_id].add(current.company_id)
-      } else if (current.direction) {
-        accumulator[current.user_id].add(current.company_id)
+  const companies = combined.reduce(
+    (accumulator: CompaniesInterface, current: CombinedDataInterface) => {
+      if (!accumulator[current.company_id]) {
+        accumulator[current.company_id] = { users: new Set(), jobs: new Set() } // Set because we are counting only one job like from each company
+        accumulator[current.company_id].jobs.add(current.job_id)
       }
+
       return accumulator
-    }, {})
+    },
+    {}
   )
 
-  const compareLikes = (first: string, second: string, array: UsersArray): number => {
-    let common = 0
-    array.forEach(user => {
-      // console.log(user[1].has(first) && user[1].has(second))
-      if (user[1].has(first) && user[1].has(second)) {
-        common++
-      }
-    })
-    return common
+  for (let i = 0; i < combined.length; i++) {
+    const currentLike = combined[i]
+    companies[currentLike.company_id].users.add(currentLike.user_id)
   }
 
-  const answers: [string, Set<string>][] = []
-  let score: number = 0
+  // const userCompanies: UsersArray = Object.entries(
+  //   combined.reduce((accumulator: SetInterface, current: CombinedDataInterface): SetInterface => {
+  //     if (!accumulator[current.user_id]) {
+  //       accumulator[current.user_id] = new Set()
+  //       accumulator[current.user_id].add(current.company_id)
+  //     } else if (current.direction) {
+  //       accumulator[current.user_id].add(current.company_id)
+  //     }
+  //     return accumulator
+  //   }, {})
+  // )
 
-  for (let i = 0; i < companies.length; i++) {
-    const currentCompany = companies[i]
-    const nextCompany = companies[i + 1]
+  // const compareLikes = (first: string, second: string, array: UsersArray): number => {
+  //   let common = 0
+  //   array.forEach(user => {
+  //     if (user[1].has(first) && user[1].has(second)) {
+  //       common++
+  //     }
+  //   })
+  //   return common
+  // }
 
-    if (!answers.length && !score) {
-      answers[0] = currentCompany
-      answers[1] = nextCompany
-      score = compareLikes(currentCompany[0], nextCompany[0], userCompanies)
-      i++
-      continue
-    }
+  // const answers: any = []
+  // let score: number = 0
 
-    const comparisonToFirst: number = compareLikes(currentCompany[0], answers[0][0], userCompanies)
-    const comparisonToSecond: number = compareLikes(currentCompany[0], answers[1][0], userCompanies)
-    console.log(answers[0][0], answers[1][0])
+  // for (let i = 0; i < companies.length; i++) {
+  //   const currentCompany = companies[i]
+  //   const nextCompany = companies[i + 1]
 
-    if (comparisonToFirst > score) {
-      answers[1] = currentCompany
-      score = comparisonToFirst
-      continue
-    }
+  //   if (!answers.length && !score) {
+  //     answers[0] = currentCompany
+  //     answers[1] = nextCompany
+  //     score = compareLikes(currentCompany[0], nextCompany[0], userCompanies)
+  //     i++
+  //     continue
+  //   }
 
-    if (comparisonToSecond > score) {
-      answers[0] = currentCompany
-      score = comparisonToSecond
-    }
-  }
+  //   const comparisonToFirst: number = compareLikes(currentCompany[0], answers[0][1], userCompanies)
+  //   const comparisonToSecond: number = compareLikes(currentCompany[0], answers[1][1], userCompanies)
 
-  return { company1: answers[0][0], company2: answers[1][0], similarity: score }
+  //   if (comparisonToFirst > score) {
+  //     answers[1] = currentCompany
+  //     score = comparisonToFirst
+  //     continue
+  //   }
+
+  //   if (comparisonToSecond > score) {
+  //     answers[0] = currentCompany
+  //     score = comparisonToSecond
+  //   }
+  // }
+
+  console.log(companies)
+
+  // return { company1: answers[0][0], company2: answers[1][0], similarity: score }
 }
