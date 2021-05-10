@@ -1,8 +1,10 @@
 import { ReactionInterface, StringSetArrayType, StringSetInterface } from './interfaces'
 import { findHighestSimilarity } from './utils'
 
-export const taskOne = async (reactionsData: ReactionInterface[]) => {
-  const reactions: ReactionInterface[] = reactionsData
+export const taskOne = async (
+  reactionsData: ReactionInterface[] | Promise<ReactionInterface[]>
+) => {
+  const reactions: ReactionInterface[] = await reactionsData
 
   const users: StringSetArrayType[] = Object.entries(
     reactions.reduce(
