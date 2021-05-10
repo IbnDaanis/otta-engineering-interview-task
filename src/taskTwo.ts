@@ -7,6 +7,11 @@ import {
 } from './interfaces'
 import { findHighestSimilarity } from './utils'
 
+// 1. Get the jobs and reactions lists
+// 2. Combine them so each reaction has the correct company
+// 4. Make a list of the companies and the users who liked at least one job in that company
+// 3. Compare each company's common users to another's
+
 export const taskTwo = async (
   jobsData: JobInterface[] | Promise<JobInterface[]>,
   reactionsData: ReactionInterface[] | Promise<ReactionInterface[]>
