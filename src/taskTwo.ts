@@ -6,6 +6,7 @@ import { CombinedDataInterface } from './interfaces/CombinedDataInterface'
 import { CompaniesInterface } from './interfaces/CompaniesInterface'
 import { JobInterface } from './interfaces/JobInterface'
 import { ReactionInterface } from './interfaces/ReactionInterface'
+import { StringSetArrayType } from './interfaces/StringSetArrayType'
 import { compareSetSimilarity } from './utils/compareSetSimilarity'
 // import { SetInterface } from './interfaces/SetInterface'
 // import { UsersInterface } from './interfaces/UsersInterface'
@@ -16,24 +17,20 @@ export const taskTwo = async () => {
   const jobs: JobInterface[] = jobsSample1
   const reactions: ReactionInterface[] = reactionsSample1
   const combined: CombinedDataInterface[] = reactions.map(reaction => {
-    let curr: any = reaction
+    const current: CombinedDataInterface = { ...reaction, company_id: '' }
     jobs.forEach(job => {
       if (reaction.job_id === job.job_id) {
-        curr = { ...reaction, company_id: job.company_id }
+        current.company_id = job.company_id
       }
     })
-    return curr
+    return current
   })
 
-  const companies = Object.entries(
+  const companies: StringSetArrayType[] = Object.entries(
     combined.reduce((accumulator: CompaniesInterface, current: CombinedDataInterface) => {
-      if (!accumulator[current.company_id]) {
-        accumulator[current.company_id] = new Set() // Set because we are counting only one job like from each company
-        accumulator[current.company_id].add(current.user_id)
-      } else {
-        accumulator[current.company_id].add(current.user_id)
-      }
-
+      if (!accumulator[current.company_id]) accumulator[current.company_id] = new Set()
+      // Set because we are counting only one job like from each company
+      accumulator[current.company_id].add(current.user_id)
       return accumulator
     }, {})
   )

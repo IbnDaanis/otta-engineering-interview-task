@@ -1,13 +1,14 @@
 import { ReactionInterface } from './interfaces/ReactionInterface'
-import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
+import { UsersInterface } from './interfaces/UsersInterface'
 // import Reactions from './data/reactions'
 import { reactionsSample1 } from './data/reactionsSamples'
 import { compareSetSimilarity } from './utils/compareSetSimilarity'
+import { StringSetArrayType } from './interfaces/StringSetArrayType'
 
 export const taskOne = async () => {
   const reactions: ReactionInterface[] = reactionsSample1
 
-  const users: UsersArray = Object.entries(
+  const users: StringSetArrayType[] = Object.entries(
     reactions.reduce((accumulator: UsersInterface, current: ReactionInterface): UsersInterface => {
       if (!accumulator[current.user_id]) {
         accumulator[current.user_id] = new Set()
@@ -19,7 +20,7 @@ export const taskOne = async () => {
     }, {})
   )
 
-  const answers: UsersArray = []
+  const answers: StringSetArrayType[] = []
   let score: number = 0
 
   for (let i = 0; i < users.length; i++) {
