@@ -2,6 +2,7 @@ import { ReactionInterface } from './interfaces/ReactionInterface'
 import { UsersArray, UsersInterface } from './interfaces/UsersInterface'
 // import Reactions from './data/reactions'
 import { reactionsSample1 } from './data/reactionsSamples'
+import { compareSetSimilarity } from './utils/compareSetSimilarity'
 
 export const taskOne = async () => {
   const reactions: ReactionInterface[] = reactionsSample1
@@ -18,14 +19,6 @@ export const taskOne = async () => {
     }, {})
   )
 
-  const compareLikes = (first: Set<string>, second: Set<string>): number => {
-    let common = 0
-    for (const a of first) {
-      if (second.has(a)) common++
-    }
-    return common
-  }
-
   const answers: UsersArray = []
   let score: number = 0
 
@@ -35,13 +28,13 @@ export const taskOne = async () => {
     if (!answers.length && !score) {
       answers[0] = currentUser
       answers[1] = users[i + 1]
-      score = compareLikes(currentUser[1], users[i + 1][1])
+      score = compareSetSimilarity(currentUser[1], users[i + 1][1])
       i++
       continue
     }
 
-    const comparisonToFirst: number = compareLikes(currentUser[1], answers[0][1])
-    const comparisonToSecond: number = compareLikes(currentUser[1], answers[1][1])
+    const comparisonToFirst: number = compareSetSimilarity(currentUser[1], answers[0][1])
+    const comparisonToSecond: number = compareSetSimilarity(currentUser[1], answers[1][1])
 
     if (comparisonToFirst > score) {
       answers[1] = currentUser
