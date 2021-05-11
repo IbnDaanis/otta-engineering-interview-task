@@ -7,6 +7,10 @@ export const findHighestSimilarity = (
   const answers: StringSetArrayType[] = []
   let score: number = 0
 
+  // const e2215 = data.findIndex(answer => answer[0] == '2115')
+  // const e3447 = data.findIndex(answer => answer[0] == '3447')
+  // e2215 + e3447 > 0 && console.log(compareSetSimilarity(data[e2215][1], data[e3447][1]))
+
   for (let i = 0; i < data.length; i++) {
     const currentUser: StringSetArrayType = data[i]
 
